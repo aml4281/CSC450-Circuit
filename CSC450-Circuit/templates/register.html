@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <main>
+        <h2>Register</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+            {% if error %}
+                <p class="error">Username is taken. Try Again.</p>
+            {% endif %}
+        </form>
+        <a href="{{ url_for('home') }}" id="register-link">Already have an account? Log in</a>
+    </main>
+</body>
+</html>

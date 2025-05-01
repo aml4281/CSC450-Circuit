@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Circuit</h1>
+        <a href="{{ url_for('logout') }}" id="logout-link">Logout</a>
+    </header>
+    <div class="layout">
+        <aside>
+            <h2>Projects</h2>
+            <ul>
+                {% for project in projects %}
+                    <li>
+                        <a href="{{ url_for('project', project_id=project.id) }} ">{{ project.name }}</a>"
+                    </li>
+                {% endfor %}
+                <li>
+                    <a href="{{ url_for('create_project') }}" class="new_proj">Create New Project</a>
+                </li>
+            </ul>
+        </aside>
+        <main>
+            <h2>Hello {{ username }}, welcome to Circuit!</h2>
+            <h2>You can select one of your active projects on the left or create a new one.</h2>
+            <a href="{{ url_for('create_project') }}" class="new_proj">Create New Project</a>
+            <h2>Another user can add you to a project if they know your username.</h2>
+        </main>
+    </div>
+</body>
