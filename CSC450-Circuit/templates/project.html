@@ -18,9 +18,9 @@
 </head>
 <body id="body">
     <header>
-        <h1><a href="{{ url_for('dashboard') }}" id="home-link">CIRCUIT</a></h1>
-        
-        <a href="{{ url_for('logout') }}" id="logout-link">Log Out</a>
+        <h1><a href="{{ url_for('dashboard') }}" id="home-link">Circuit</a></h1>
+        <div id="header_space"></div>
+        <a href="{{ url_for('logout') }}" class="btn btn-success" id="logout-link">Log Out</a>
     </header>
     <div class="layout">
         <aside>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="task_column" id="inProgress">
                             <h3>In Progress</h3>
-                            <ul class="task_list" id="inprogress_list"></ul>
+                            <ul class="task_list" id="inProgress_list"></ul>
                         </div>
                         <div class="task_column" id="testing">
                             <h3>Testing</h3>
@@ -66,11 +66,7 @@
                     </div>
                     <div id="variables"
                         data-project-id="{{ project_id }}"
-                        data-project-name="{{ project_name }}"
-                        data-current-user="{{ username }}"
                         data-tasks='{{ tasks|tojson }}'
-                        data-members='{{ members|tojson }}'
-                        data-messages='{{ messages|tojson }}'>
                     </div>
                     <script src="{{ url_for('static', filename='scripts/taskboard.js') }}" defer></script>
 
@@ -79,7 +75,7 @@
                     </button>
                 </div>
             </section>
-            <section class="messages">
+            <section class="messages" id="messages">
                 <h2>Messages</h2>
                 <div class="message_list" id="message_list">
                     {% for message in messages %}
@@ -97,12 +93,12 @@
             </section>
             <section class="management">
                 {% if isAdmin %}
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#manageProjectAdminModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#manageProjectAdminModal">
                         Manage Project
                     </button>
                 {% endif %}
                 {% if not isAdmin %}
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#manageProjectMemberModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#manageProjectMemberModal">
                         Manage Project
                     </button>
                 {% endif %}
@@ -146,7 +142,7 @@
                             <li>{{ member }}</li>
                         {% endfor %}
                     </ul>
-                    <form action="add_project_member" method="POST">
+                    <form action="add_project_member" method="POST" class="manage_form">
                         <h5>Add Member</h5>
                         <input type="hidden" name="project_id" value="{{ project_id }}">
                         <input type="text" id="add_member_username" name="username" placeholder="Username">
@@ -160,13 +156,13 @@
                         </div>
                         <button type="submit" class="btn btn-primary" id="add_member_button">Add</button>
                     </form>
-                    <form action="remove_project_member" method="POST">
+                    <form action="remove_project_member" method="POST" class="manage_form">
                         <h5>Remove Member</h5>
                         <input type="hidden" name="project_id" value="{{ project_id }}">
                         <input type="text" name="username" id="remove_member_username" placeholder="Username">
                         <button type="submit" class="btn btn-danger" id="remove_member_button">Remove</button>
                     </form>
-                    <form action="delete_project" method="POST">
+                    <form action="delete_project" method="POST" class="manage_form">
                         <input type="hidden" name="project_id" value="{{ project_id }}">
                         <button type="submit" class="btn btn-danger" id="delete_project_button">Delete Project</button>
                     </form>
@@ -193,7 +189,7 @@
                             <li>{{ member }}</li>
                         {% endfor %}
                     </ul>
-                    <form action="leave_project" method="POST">
+                    <form action="leave_project" method="POST" class="manage_form">
                         <input type="hidden" name="project_id" value="{{ project_id }}">
                         <button type="submit" class="btn btn-danger" id="leave_project_button">Leave Project</button>
                     </form>

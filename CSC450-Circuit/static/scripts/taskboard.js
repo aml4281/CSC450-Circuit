@@ -3,12 +3,7 @@
 const variables = document.getElementById("variables");
 
 const projectId   = variables.dataset.projectId;
-const projectName = variables.dataset.projectName;
-const currentUser = variables.dataset.currentUser;
-
 const tasks   = JSON.parse(variables.dataset.tasks);
-const members = JSON.parse(variables.dataset.members);
-const messages= JSON.parse(variables.dataset.messages);
 
 const statuses = {};
 statuses['todo'] = 'To Do';
@@ -19,6 +14,7 @@ statuses['done'] = 'Done';
 
 let columns = document.querySelectorAll(".task_list");
 
+// Build the taskboard
 tasks.forEach(task => {
     // Create new element format
     let taskItem = document.createElement("li");
@@ -82,21 +78,21 @@ let createModal = (taskId, taskTitle, taskDescription, taskStatus) => {
                     <p><strong>Status:</strong> ${statuses[taskStatus]}</p>
                     <h5>Change Status</h5>
                     <form action="change_status" method="POST">
-                        <input type="hidden" name="project_id" value="{{ project_id }}">
+                        <input type="hidden" name="project_id" value="${projectId}">
                         <input type="hidden" name="task_id" value="${taskId}">
                         <select name="task_status" class="form-select">
-                            <option value="To Do" ${taskStatus === "todo" ? "selected" : ""}>To Do</option>
-                            <option value="Designing" ${taskStatus === "designing" ? "selected" : ""}>Designing</option>
-                            <option value="In Progress" ${taskStatus === "inProgress" ? "selected" : ""}>In Progress</option>
-                            <option value="Testing" ${taskStatus === "testing" ? "selected" : ""}>Testing</option>
-                            <option value="Done" ${taskStatus === "done" ? "selected" : ""}>Done</option>
+                            <option value="todo" ${taskStatus === "todo" ? "selected" : ""}>To Do</option>
+                            <option value="designing" ${taskStatus === "designing" ? "selected" : ""}>Designing</option>
+                            <option value="inProgress" ${taskStatus === "inProgress" ? "selected" : ""}>In Progress</option>
+                            <option value="testing" ${taskStatus === "testing" ? "selected" : ""}>Testing</option>
+                            <option value="done" ${taskStatus === "done" ? "selected" : ""}>Done</option>
                         </select>
-                        <button type="submit" class="btn btn-primary">Change Status</button>
+                        <button type="submit" id="change_status_btn" class="btn btn-primary">Change Status</button>
                     </form>
                     <form action="delete_task" method="POST">
-                        <input type="hidden" name="project_id" value="{{ project_id }}">
+                        <input type="hidden" name="project_id" value="${projectId}">
                         <input type="hidden" name="task_id" value="${taskId}">
-                        <button type="submit" class="btn btn-danger">Delete Task</button>
+                        <button type="submit" id="delete_task_btn" class="btn btn-danger">Delete Task</button>
                     </form>
                 
                 </div>
@@ -110,6 +106,7 @@ let createModal = (taskId, taskTitle, taskDescription, taskStatus) => {
 };
 
 // Add event listeners to task items
+// This will create a modal when a task is clicked
 let taskItems = document.querySelectorAll(".taskModal");
 taskItems.forEach(taskItem => {
     taskItem.addEventListener("click", () => {

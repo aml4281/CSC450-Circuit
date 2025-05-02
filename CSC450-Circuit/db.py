@@ -208,6 +208,31 @@ def get_task_assignees(task_id):
 
     return [user[1] for user in users]  # Return list of username strings
 
+def change_task_status(task_id, new_status):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        UPDATE Task SET task_status = ? WHERE task_id = ?
+    ''', (new_status, task_id))
+    conn.commit()
+    conn.close()
+
+def delete_task(task_id):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Delete all associations with users
+    cursor.execute('''
+        DELETE FROM Task_User WHERE task_id = ?
+    ''', (task_id,))
+
+    cursor.execute('''
+        DELETE FROM Task WHERE task_id = ?
+    ''', (task_id,))
+    conn.commit()
+    conn.close()
+
 def add_message(content, user_id, project_id):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()

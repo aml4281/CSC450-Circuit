@@ -8,16 +8,24 @@ body {
 header {
     display: flex;
     width: 100%;
-    height: 10vh;
-    justify-content: space-between;
-    align-items: center;
-    
+    height: 12vh;
 }
 
 header h1 {
-    margin-left: 80px;
-    font-size: 3rem;
-    padding-top: 15px;
+    flex: 1 1 0%;
+    min-width: 0;
+    max-width: calc(25% + 5px);
+}
+
+#home-link {
+    display: block;
+    height: 90%;
+    line-height: 11vh;
+    font-size: 4.4rem;
+    background-color: #007BFF;
+    margin: 15px 25px 15px 35px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 header a {
@@ -27,15 +35,18 @@ header a {
     font-size: 1.2em;
 }
 
-#logout-link {
-    background-color: #007BFF;
-    padding: 10px 30px;
-    border-radius: 5px;
+#header_space {
+    flex: 2 1 0%;
 }
 
-#logout-link:hover {
-    background-color: #0056b3;
+#logout-link {
+    padding: 10px 10px;
+    border-radius: 5px;
+    flex: 1 1 0%;
+    max-width: 8%;
+    align-self: center;
 }
+
 
 .layout {
     display: flex;

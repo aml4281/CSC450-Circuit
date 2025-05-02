@@ -206,7 +206,7 @@ def send_message():
 
     db.add_message(content, user.user_id, project_id)
 
-    return redirect(f'/project/{project_id}')
+    return redirect(f'/project/{project_id}#messages')
 
 @app.route('/project/add_task', methods=['POST'])
 def add_task():
@@ -235,10 +235,51 @@ def add_task():
 
     return redirect(f'/project/{project_id}')
 
+@app.route('/project/change_status', methods=['POST'])
+def change_status():
+    if not session.get('user_id'):
+        return redirect('/')
+    
+    project_id = request.form['project_id']
+    task_id = request.form['task_id']
+    status = request.form['task_status']
+
+    print(project_id, task_id, status)
+    
+    user = db.get_user(session.get('user_id'))
+    if not user:
+        return redirect('/dashboard')
+    
+    if not db.is_member(user.user_id, project_id):
+        return redirect('/dashboard')
+
+    db.change_task_status(task_id, status)
+
+    return redirect(f'/project/{project_id}')
+
+@app.route('/project/delete_task', methods=['POST'])
+def delete_task():
+    if not session.get('user_id'):
+        return redirect('/')
+    
+    project_id = request.form['project_id']
+    task_id = request.form['task_id']
+    
+    user = db.get_user(session.get('user_id'))
+    if not user:
+        return redirect('/dashboard')
+    
+    if not db.is_member(user.user_id, project_id):
+        return redirect('/dashboard')
+
+    db.delete_task(task_id)
+
+    return redirect(f'/project/{project_id}')
 
 @app.route('/logout')
 def logout():
-    pass
+    session.clear()
+    return redirect('/')
 
 
 if __name__ == '__main__':

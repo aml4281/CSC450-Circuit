@@ -1,7 +1,21 @@
 
 
 
+html {
+    scroll-behavior: auto;
+}
 
+.task_board h2 {
+    font-size: 2rem;
+    display: block;
+    color: white;
+    padding: 10px;
+    border: 4px solid white;
+    border-radius: 5px;
+    margin: 30px 0;
+    text-align: center;
+    line-height: normal;
+}
 
 #columns {
     display: flex;
@@ -13,6 +27,7 @@
 
 .task_column {
     flex: 1;
+    max-width: 20%;
 }
 
 .task_list {
@@ -25,15 +40,28 @@
     padding: 0;
 }
 
-.task_list li a {
+
+.taskModal {
     display: block;
+    overflow-wrap: break-word;
+    line-height: 40px;
+    text-align: center;
+    flex: 1;
     text-decoration: none;
     margin: 0 5px;
-    height: 40px;
-    box-sizing: border-box;
+    min-height: 40px;
+    color: white;
+    background-color: #007BFF;
+    border-radius: 10px;
+    text-shadow: 0 0 2px #000;
+    border: 2px solid black;
 }
 
-.task_list li a:first-of-type {
+.taskModal:hover {
+    background-color: #6197ed;
+}
+
+.task_list li:first-child {
     margin-top: 5px;
 }
 
@@ -57,6 +85,7 @@ section.messages {
 
 .message {
     text-align: left;
+    padding-left: 4px;
 }
 
 textarea {
@@ -67,4 +96,28 @@ textarea {
 
 .messages button {
     width: 100%;
+}
+
+.manage_form {
+    margin: 20px 0;
+}
+
+.manage_form input, .manage_form div {
+    margin: 5px 0;
+}
+
+ul#assigned_members {
+    padding: 0;
+}
+
+#change_status_btn {
+    margin: 10px 0;
+}
+
+#delete_task_btn {
+    margin-top: 10px
+}
+
+.modal-body ul {
+    padding: 0;
 }
