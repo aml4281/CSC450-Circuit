@@ -1,0 +1,70 @@
+
+
+
+
+
+#columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1rem;
+    margin-bottom: 20px;
+}
+
+.task_column {
+    flex: 1;
+}
+
+.task_list {
+    background-color: #d1cecd;
+    min-height: 40vh;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 0;
+}
+
+.task_list li a {
+    display: block;
+    text-decoration: none;
+    margin: 0 5px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.task_list li a:first-of-type {
+    margin-top: 5px;
+}
+
+#project_members {
+    padding-left: 0;
+}
+
+section.messages {
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#message_list {
+    width: 100%;
+    background-color: #d1cecd;
+    overflow-y: scroll;
+    height: 300px;
+    border-radius: 5px;
+    color: black;
+}
+
+.message {
+    text-align: left;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.messages button {
+    width: 100%;
+}
