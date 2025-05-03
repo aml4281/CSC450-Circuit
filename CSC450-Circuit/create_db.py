@@ -1,11 +1,12 @@
 import sqlite3
+import os
 
 # Run this script to create the database and tables (For development only)
 # In the final version, the database will be hosted alongside the source files
 
 def create_db():
     # Connect to the SQLite database
-    conn = sqlite3.connect('CSC450-Circuit/database.db')
+    conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db'))
 
     # Create a cursor object to execute SQL commands
     cursor = conn.cursor()

@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, session, redirect
 import db
 from dotenv import load_dotenv
-from os import getenv
+import os
 
-load_dotenv('.env')
+
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
 
 app = Flask(__name__)
-app.secret_key = getenv('SECRET_KEY')
+app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def home():

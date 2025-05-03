@@ -1,11 +1,14 @@
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import models
+import os
 
 # Define various functions to interact with the database
 
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
+
 def register_user(username, password):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     hashed_password = generate_password_hash(password)
@@ -23,7 +26,7 @@ def register_user(username, password):
     
 
 def login_user(username, password):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -38,7 +41,7 @@ def login_user(username, password):
         return False
     
 def get_user(user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -53,7 +56,7 @@ def get_user(user_id):
         return None
     
 def get_user_by_username(username):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -68,7 +71,7 @@ def get_user_by_username(username):
         return None
     
 def get_user_projects(user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -82,7 +85,7 @@ def get_user_projects(user_id):
     return [models.Project(project[0], project[1]) for project in projects]  # Return list of project objects
 
 def get_project_name(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -97,7 +100,7 @@ def get_project_name(project_id):
         return None
 
 def get_project_users(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -111,7 +114,7 @@ def get_project_users(project_id):
     return [models.User(user[0], user[1]) for user in users]  # Return list of user objects
 
 def get_project_tasks(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -124,7 +127,7 @@ def get_project_tasks(project_id):
     return [models.Task(task[0], task[1], task[2], task[3]) for task in tasks]  # Return list of task objects
 
 def get_project_messages(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -137,7 +140,7 @@ def get_project_messages(project_id):
     return [models.Message(message[0], message[1], message[2], project_id, message[3]) for message in messages]  # Return list of message objects
 
 def add_project(project_name, user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -156,7 +159,7 @@ def add_project(project_name, user_id):
     return new_id  # Return the project ID of the new project
 
 def add_task(task_title, task_description, task_status, project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -169,7 +172,7 @@ def add_task(task_title, task_description, task_status, project_id):
     return cursor.lastrowid  # Return the task ID of the new task
 
 def get_task(task_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -184,7 +187,7 @@ def get_task(task_id):
         return None
 
 def assign_task_to_user(task_id, user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -195,7 +198,7 @@ def assign_task_to_user(task_id, user_id):
     conn.close()
 
 def get_task_assignees(task_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -209,7 +212,7 @@ def get_task_assignees(task_id):
     return [user[1] for user in users]  # Return list of username strings
 
 def change_task_status(task_id, new_status):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -219,7 +222,7 @@ def change_task_status(task_id, new_status):
     conn.close()
 
 def delete_task(task_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     # Delete all associations with users
@@ -234,7 +237,7 @@ def delete_task(task_id):
     conn.close()
 
 def add_message(content, user_id, project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -245,7 +248,7 @@ def add_message(content, user_id, project_id):
     conn.close()
 
 def get_messages(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -258,7 +261,7 @@ def get_messages(project_id):
     return [models.Message(message[0], message[1], message[2], project_id, message[3]) for message in messages]  # Return list of message objects
 
 def is_admin(user_id, project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -270,7 +273,7 @@ def is_admin(user_id, project_id):
     return result and result[0] == 'admin'  # Return True if user is admin, False otherwise
 
 def add_member_to_project(project_id, user_id, role):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -281,7 +284,7 @@ def add_member_to_project(project_id, user_id, role):
     conn.close()
 
 def is_member(user_id, project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -293,7 +296,7 @@ def is_member(user_id, project_id):
     return result is not None  # Return True if user is a member, False otherwise
 
 def remove_member_from_project(project_id, user_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     # Delete all task assignments for the user in the project
@@ -309,7 +312,7 @@ def remove_member_from_project(project_id, user_id):
     conn.close()
 
 def delete_project(project_id):
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     # Delete all associations with tasks and users
