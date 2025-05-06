@@ -1,5 +1,8 @@
 "use strict";
 
+// This script is used to create a taskboard for a project management application.
+// It includes functionality to build the task board, create task pop-up modals, and event listeners for clicking on tasks.
+
 const variables = document.getElementById("variables");
 
 const projectId   = variables.dataset.projectId;

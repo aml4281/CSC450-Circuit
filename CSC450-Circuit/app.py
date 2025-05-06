@@ -3,6 +3,7 @@ import db
 from dotenv import load_dotenv
 import os
 
+# Main Flask application with routing and session management
 
 load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
 
@@ -11,14 +12,17 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def home():
+    '''Landing page with login and registration options.'''
     return render_template('login.html')
 
 @app.route('/go_to_register')
 def go_to_register(error=False):
+    '''Redirect to the registration page.'''
     return render_template('register.html', error=error)
 
 @app.route('/register', methods=['POST'])
 def register():
+    '''Handle user registration.'''
     username = request.form['username']
     password = request.form['password']
     
@@ -32,6 +36,7 @@ def register():
     
 @app.route('/login', methods=['POST'])
 def login():
+    '''Handle user login.'''
     username = request.form['username']
     password = request.form['password']
     
@@ -46,6 +51,7 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
+    '''Display the user's dashboard with their projects.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -60,6 +66,7 @@ def dashboard():
 
 @app.route('/project/<int:project_id>')
 def project(project_id):
+    '''Display the project page with tasks and messages.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -99,6 +106,7 @@ def project(project_id):
 
 @app.route('/create_project', methods=['POST'])
 def create_project():
+    '''Handle project creation.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -113,6 +121,7 @@ def create_project():
 
 @app.route('/project/add_project_member', methods=['POST'])
 def add_member():
+    '''Handle adding a member to a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -138,6 +147,7 @@ def add_member():
 
 @app.route('/project/remove_project_member', methods=['POST'])
 def remove_member():
+    '''Handle removing a member from a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -158,6 +168,7 @@ def remove_member():
 
 @app.route('/project/leave_project', methods=['POST'])
 def leave_project():
+    '''Handle a user leaving a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -176,6 +187,7 @@ def leave_project():
 
 @app.route('/project/delete_project', methods=['POST'])
 def delete_project():
+    '''Handle project deletion.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -193,6 +205,7 @@ def delete_project():
 
 @app.route('/project/send_message', methods=['POST'])
 def send_message():
+    '''Handle sending a message in a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -211,6 +224,7 @@ def send_message():
 
 @app.route('/project/add_task', methods=['POST'])
 def add_task():
+    '''Handle adding a task to a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -238,6 +252,7 @@ def add_task():
 
 @app.route('/project/change_status', methods=['POST'])
 def change_status():
+    '''Handle changing the status of a task.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -260,6 +275,7 @@ def change_status():
 
 @app.route('/project/delete_task', methods=['POST'])
 def delete_task():
+    '''Handle deleting a task from a project.'''
     if not session.get('user_id'):
         return redirect('/')
     
@@ -279,6 +295,7 @@ def delete_task():
 
 @app.route('/logout')
 def logout():
+    '''Handle user logout.'''
     session.clear()
     return redirect('/')
 

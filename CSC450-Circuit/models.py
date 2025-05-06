@@ -1,6 +1,9 @@
 from datetime import datetime
 from pytz import timezone, utc
 
+# Defines the class models used throughout the application
+# All classes have a to_dict method, allowing them to be easily serialized to JSON for the javascript frontend
+
 class User:
     def __init__(self, user_id, username):
         self.user_id = user_id

@@ -1,10 +1,11 @@
 import sqlite3
 import os
 
-# Run this script to create the database and tables (For development only)
-# In the final version, the database will be hosted alongside the source files
+# Run this script before running app.py to create the database and tables 
+# During deployment, the database will be hosted alongside the source files, so this script will not be needed
 
 def create_db():
+    '''Create the SQLite database and tables'''
     # Connect to the SQLite database
     conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db'))
 
